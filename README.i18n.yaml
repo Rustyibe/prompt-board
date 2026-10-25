@@ -1,0 +1,31 @@
+# README.md 的双语配对一致性记录（见 docs/i18n/pairing-contract.md）。
+# 按标题小节记录：该小节中围栏代码之外的英文与中文 block 的哈希。
+# 改动任意一侧后，请同步另一侧并重新记录：
+#   python3 scripts/pairing.py write README.md
+/prompt-board-pb:
+  en: 9859d1a350ae0741
+  zh: 4c43e807caec53b3
+/prompt-board-pb/install:
+  en: e6ea97c273f14874
+  zh: 91c2646bcbfdd82e
+/prompt-board-pb/quick-start:
+  en: 76458034a0e87954
+  zh: d81c16be248f8f0f
+/prompt-board-pb/commands:
+  en: ed7d5111ca2d0342
+  zh: 41d64dbc384fc1b2
+/prompt-board-pb/prompt-ids:
+  en: 89988d9faa7f1243
+  zh: a97b7c451a72731c
+/prompt-board-pb/clipboard-and-ssh-osc52:
+  en: 69653a8e1e882b88
+  zh: 732d0a78a370ae81
+/prompt-board-pb/shell-completion:
+  en: 3eed2f6af0699104
+  zh: 2e47f7842c20bae6
+/prompt-board-pb/configuration:
+  en: 96bb3a60ea988a7e
+  zh: f79acf66eac3d930
+/prompt-board-pb/development:
+  en: 69bf654b9a62f503
+  zh: 97c0cbee4f2f73b9

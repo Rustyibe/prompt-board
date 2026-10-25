@@ -1,0 +1,6 @@
+{
+  "roots": ["README.md", "docs"],
+  "exclude": ["docs/i18n/*"],
+  "english_only": [],
+  "contract": "docs/i18n/pairing-contract.md"
+}
