@@ -157,6 +157,14 @@ impl Store {
         self.save()?;
         Ok(p)
     }
+
+    /// 清空全部, 返回删除条数
+    pub fn clear(&mut self) -> Result<usize> {
+        let n = self.prompts.len();
+        self.prompts.clear();
+        self.save()?;
+        Ok(n)
+    }
 }
 
 #[cfg(test)]
@@ -197,6 +205,18 @@ mod tests {
         let p = s.add("内容").unwrap();
         let s2 = Store::open(s.file.clone()).unwrap();
         assert_eq!(s2.get(&p.id).unwrap().content, "内容");
+    }
+
+    #[test]
+    fn clear_removes_everything() {
+        let mut s = temp_store("clear");
+        s.add("a").unwrap();
+        s.add("b").unwrap();
+        assert_eq!(s.clear().unwrap(), 2);
+        assert!(s.list().is_empty());
+        assert_eq!(s.clear().unwrap(), 0);
+        let s2 = Store::open(s.file.clone()).unwrap();
+        assert!(s2.list().is_empty());
     }
 
     #[test]

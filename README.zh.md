@@ -42,6 +42,7 @@ tzafku  你是资深 DBA, 帮我优化下面的 SQL 并解释索引  2026-10-25 
 | `pb copy <id>` | 复制正文；`--id` 复制 id 本身；`--osc` 与 `--local` 选择通道 |
 | `pb edit <id>` | 用编辑器修改正文 |
 | `pb rm <id>` | 删除；交互终端里会确认，`-y` 跳过 |
+| `pb prune` | 清空全部提示词；需要确认，`-y` 跳过 |
 | `pb search <关键词>…` | 搜索正文，多个关键词为 AND |
 | `pb completions <shell>` | 输出自动补全（completion）注册脚本 |
 

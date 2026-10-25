@@ -42,6 +42,7 @@ tzafku  你是资深 DBA, 帮我优化下面的 SQL 并解释索引  2026-10-25 
 | `pb copy <id>` | Copy the text; `--id` copies the id itself; `--osc` and `--local` pick the channel |
 | `pb edit <id>` | Edit the text in your editor |
 | `pb rm <id>` | Delete; asks for confirmation in an interactive terminal, `-y` skips |
+| `pb prune` | Delete all prompts; asks for confirmation, `-y` skips it |
 | `pb search <关键词>…` | Search the texts; several keywords are ANDed together |
 | `pb completions <shell>` | Print the shell completion registration script |
 

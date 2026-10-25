@@ -31,6 +31,7 @@ const AFTER_HELP: &str = r#"
   pb copy 4d7                           # 复制到剪贴板
   pb edit 4d7                           # $EDITOR 修改内容
   pb rm 4d7                             # 删除
+  pb prune                              # 一键清空(交互确认; --yes 跳过)
   pb search 翻译                        # 多词为 AND: pb search a b
   pb ls --no-pager                      # 不分页直接输出
 
@@ -107,6 +108,12 @@ enum Cmd {
     Rm {
         #[arg(value_name = "ID")]
         id: String,
+        /// 跳过确认
+        #[arg(short = 'y', long)]
+        yes: bool,
+    },
+    /// 清空全部提示词
+    Prune {
         /// 跳过确认
         #[arg(short = 'y', long)]
         yes: bool,
@@ -199,6 +206,7 @@ fn run(cli: Cli) -> Result<()> {
         Cmd::Copy { id, id_only, osc, local } => cmd_copy(Store::load()?, &id, id_only, osc, local),
         Cmd::Edit { id } => cmd_edit(Store::load()?, &id),
         Cmd::Rm { id, yes } => cmd_rm(Store::load()?, &id, yes),
+        Cmd::Prune { yes } => cmd_prune(Store::load()?, yes),
         Cmd::Search { keywords } => {
             let s = Store::load()?;
             let kws: Vec<String> = keywords.iter().map(|k| k.to_lowercase()).collect();
@@ -378,6 +386,31 @@ fn cmd_rm(mut s: Store, query: &str, yes: bool) -> Result<()> {
     }
     s.remove(&p.id)?;
     println!("{} 已删除 [{}]", "✔".green().bold(), p.id);
+    Ok(())
+}
+
+fn cmd_prune(mut s: Store, yes: bool) -> Result<()> {
+    let n = s.list().len();
+    if n == 0 {
+        println!("(本来就是空的)");
+        return Ok(());
+    }
+    if !yes {
+        if !std::io::stdin().is_terminal() {
+            bail!("非交互环境清空 {} 条需显式确认: `pb prune --yes`", n);
+        }
+        let ok = dialoguer::Confirm::new()
+            .with_prompt(format!("清空全部 {} 条提示词?", n))
+            .default(false)
+            .interact()
+            .context("确认失败")?;
+        if !ok {
+            println!("已取消");
+            return Ok(());
+        }
+    }
+    let n = s.clear()?;
+    println!("{} 已清空 {} 条提示词", "✔".green().bold(), n);
     Ok(())
 }
 
